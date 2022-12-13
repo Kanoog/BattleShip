@@ -314,15 +314,6 @@ public class Computer {
 			System.out.println("\n");
 		}
 		
-		for(int k = 0; k < this.BOARD_LENGTH; k++) {
-			for(int j = 0; j < this.BOARD_LENGTH; j++) {
-				System.out.print(this.computerBoard[k][j] + " ");
-			}
-		
-			System.out.println();
-		}
-		
-		
 	}
 	
 	public int checkPosition(int x, int y) {
@@ -331,13 +322,22 @@ public class Computer {
 		// if it was guessed, but missed. Then return 0
 		// if the position has not been guessed yet then return 2
 		
-		for(int i = 0; i < this.BOARD_LENGTH; i++) {
-			if(this.hitGuesses[i][0] == x && this.hitGuesses[i][1] == y) return 1;
-			
-			if(this.missedGuesses[i][0] == x && this.missedGuesses[i][1] == y) return 0;
-		}
+		// you can check the hitGuesses array and the missedGuesses array to check that the coordinates have already been 
+		// guessed.
 		
+		
+		// try writing this pseudocode out
+		
+		
+		//		for the length of the board
+		//			if hitGuesses[i][0] == x && hitGuesses[i][1] == y
+		//				then return 1
+		//						
+		//			if missedGuesses[i][0] == x && missedGuesses[i][1] == y
+		//			then return 1
+		//		
 		return 2;
+					
 	}
 	
 	
@@ -352,14 +352,7 @@ public class Computer {
 		
 		comp.showCurrentBoard();
 		
-		boolean guess = comp.checkUserGuess(1, 9);
-		
-		comp.showCurrentBoard();
-		
-		guess = comp.checkUserGuess(8, 8);
-		
-		comp.showCurrentBoard();
-		
+		// test out the board here
 	
 	}
 
