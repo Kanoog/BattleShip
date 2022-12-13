@@ -9,10 +9,11 @@ import java.util.Random;
 public class Computer {
 	
 	public int BOARD_LENGTH = 10;
+	public int guesses = 15;
 	
 	public int[][] computerBoard = new int[BOARD_LENGTH][BOARD_LENGTH];
-	public int[][] hitGuesses = new int[BOARD_LENGTH][2];
-	public int[][] missedGuesses = new int[BOARD_LENGTH][2];
+	public int[][] hitGuesses = new int[guesses][2];
+	public int[][] missedGuesses = new int[guesses][2];
 	public Ship[] shipArray;
 	public int numOfShips;
 	public int shipsSunk;
@@ -32,15 +33,24 @@ public class Computer {
 				this.computerBoard[i][j] = -1;
 			}
 		}
-	}
-	
-	public boolean spaceTaken(int x, int y) {
-		if(this.computerBoard[x][y] == -1) {
-			return false;
+		
+		for(int i = 0; i < this.guesses; i++) {
+			for(int j = 0; j < 2; j++) {
+				this.hitGuesses[i][j] = -1;
+				this.missedGuesses[i][j] = -1;
+			}
 		}
 		
-		return true;
+		
 	}
+	
+//	public boolean spaceTaken(int x, int y) {
+//		if(this.computerBoard[x][y] == -1) {
+//			return false;
+//		}
+//		
+//		return true;
+//	}
 	
 	public void placeShipsOnBoard() {
 		populateInitialBoard();
@@ -276,12 +286,13 @@ public class Computer {
 				}
 				
 				break;
-			}else {
-				this.missedGuesses[this.missTracker][0] = checkX;
-				this.missedGuesses[this.missTracker][1] = checkY;
-				this.missTracker++;
 			}
 		}
+		
+		this.missedGuesses[this.missTracker][0] = checkX;
+		this.missedGuesses[this.missTracker][1] = checkY;
+		this.missTracker++;
+		
 		return hit;
 	}
 	
@@ -334,23 +345,47 @@ public class Computer {
 		//				then return 1
 		//						
 		//			if missedGuesses[i][0] == x && missedGuesses[i][1] == y
-		//			then return 1
-		//		
+		//			then return 0
+		
+	
 		return 2;
 					
+	}
+	
+	public void revealBoard() {
+		for(int num = 0; num < this.BOARD_LENGTH; num++) {
+			System.out.print("     " + num + "  ");
+		}
+		
+		System.out.println();
+		
+		for(int i = 0; i < this.BOARD_LENGTH; i++) {
+			
+			System.out.print(i + " ");
+			for(int j = 0; j < this.BOARD_LENGTH; j++) {
+				
+				if(this.computerBoard[i][j] == 0) {
+					System.out.print("  SHIP |");
+				}else {
+					System.out.print(" (" + i + "," + j + ") |");
+				}
+				
+			}
+			System.out.println("\n");
+		}
 	}
 	
 	
 	
 	
 	public static void main(String args[]) {
-		int ships = 5;
-		
-		Computer comp = new Computer(ships);
-		
-		comp.placeShipsOnBoard();
-		
-		comp.showCurrentBoard();
+//		int ships = 5;
+//		
+//		Computer comp = new Computer(ships);
+//		
+//		comp.placeShipsOnBoard();
+//		
+//		comp.showCurrentBoard();
 		
 		// test out the board here
 	
