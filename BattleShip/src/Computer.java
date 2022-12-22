@@ -3,11 +3,17 @@ import java.util.Random;
 
 /**
  * 
- * @author kanoog
+ * @author Kanoog Moua and Adam Moua
+ * This computer class will create the board for the computer,
+ * place the ships on the board, show/update the board
  *
  */
 public class Computer {
 	
+	/**
+	 * The attributes for the class
+	 *
+	 */
 	public int BOARD_LENGTH = 10;
 	public int guesses = 15;
 	
@@ -20,12 +26,21 @@ public class Computer {
 	public int hitTracker = 0;
 	public int missTracker = 0;
 	
+	/**
+	 * @param Contructor takes in the number of ships to place on the board
+	 * and initializes it 
+	 * 
+	 */
 	public Computer(int ships) { // number of ships to be placed on the board
 		this.numOfShips = ships;
 		this.shipArray = new Ship[this.numOfShips];
 	}
 	
-	
+	/**
+	 * This is just a helper method that initializes the 
+	 * array values to -1
+	 * 
+	 */
 	public void populateInitialBoard() {
 		
 		for(int i = 0; i < this.BOARD_LENGTH; i++) {
@@ -44,14 +59,10 @@ public class Computer {
 		
 	}
 	
-//	public boolean spaceTaken(int x, int y) {
-//		if(this.computerBoard[x][y] == -1) {
-//			return false;
-//		}
-//		
-//		return true;
-//	}
-	
+	/**
+	 * This method will place the ships on the board
+	 * 
+	 */
 	public void placeShipsOnBoard() {
 		populateInitialBoard();
 		
@@ -101,7 +112,7 @@ public class Computer {
 								tempX--;
 								count++;
 							}else {
-								x = random.nextInt(7) + 3; 
+								x = random.nextInt(7) + 3; // generate new x,y coordinate to play ship on if there is a collision with another ship
 								y = random.nextInt(this.BOARD_LENGTH);
 								break;
 							}
@@ -136,7 +147,7 @@ public class Computer {
 								tempX++;
 								count++;
 							}else {
-								x = random.nextInt(8); 
+								x = random.nextInt(8); // generate new x,y coordinate to play ship on if there is a collision with another ship
 								y = random.nextInt(this.BOARD_LENGTH);
 								break;
 							}
@@ -185,7 +196,7 @@ public class Computer {
 								tempY--;
 								count++;
 							}else {
-								x = random.nextInt(this.BOARD_LENGTH); 
+								x = random.nextInt(this.BOARD_LENGTH); // generate new x,y coordinate to play ship on if there is a collision with another ship
 								y = random.nextInt(7) + 3;
 								break;
 							}
@@ -220,7 +231,7 @@ public class Computer {
 								tempY++;
 								count++;
 							}else {
-								x = random.nextInt(this.BOARD_LENGTH); 
+								x = random.nextInt(this.BOARD_LENGTH);  // generate new x,y coordinate to play ship on if there is a collision with another ship
 								y = random.nextInt(8);
 								break;
 							}
@@ -250,6 +261,10 @@ public class Computer {
 		} // end of the for-loop for placing each ship on the board
 	}
 	
+	/**
+	 * This will determine if the position of the ship placement is 
+	 * 
+	 */
 	public int shipPosition() {
 		Random random = new Random();
 		
@@ -257,12 +272,17 @@ public class Computer {
 		
 	}
 	
-	
+	/**
+	 * return the number of sunk ships
+	 */
 	public int sunkedShips() {
 		return this.shipsSunk;
 	}
 	
-	
+	/**
+	 * check to see if the player's guess hit the ship's
+	 * coordinate(s) or not
+	 */
 	public boolean checkUserGuess(int checkX, int checkY) {
 		
 		Ship current;
@@ -296,7 +316,12 @@ public class Computer {
 		return hit;
 	}
 	
-	
+	/**
+	 * Show the current status of missed / hit guesses by the
+	 * player on the board. If the x,y, spot has not been guessed
+	 * yet, then display the x,y coordinate. Otherwise, show hit
+	 * or miss depending on the correctness of the user's guess
+	 */
 	public void showCurrentBoard() {
 		
 		int check;
@@ -327,31 +352,26 @@ public class Computer {
 		
 	}
 	
+	/**
+	 * check to see if the position on the board has already been guessed
+	 * if it was guessed and hit part of the ship, then return 1
+	 * if it was guessed, but missed. Then return 0
+	 * if the position has not been guessed yet then return 2
+	 */
 	public int checkPosition(int x, int y) {
-		// check to see if the position on the board has already been guessed
-		// if it was guessed and hit part of the ship, then return 1
-		// if it was guessed, but missed. Then return 0
-		// if the position has not been guessed yet then return 2
 		
-		// you can check the hitGuesses array and the missedGuesses array to check that the coordinates have already been 
-		// guessed.
-		
-		
-		// try writing this pseudocode out
-		
-		
-		//		for the length of the board
-		//			if hitGuesses[i][0] == x && hitGuesses[i][1] == y
-		//				then return 1
-		//						
-		//			if missedGuesses[i][0] == x && missedGuesses[i][1] == y
-		//			then return 0
-		
+		for(int i = 0; i < this.guesses; i++) {
+			if(this.hitGuesses[i][0] == x && this.hitGuesses[i][1] == y) return 1;
 	
+			if(this.missedGuesses[i][0] == x && this.missedGuesses[i][1] == y) return 0;
+		}
 		return 2;
 					
 	}
 	
+	/**
+	 * Reveals the actual placement on the ships on the board
+	 */
 	public void revealBoard() {
 		for(int num = 0; num < this.BOARD_LENGTH; num++) {
 			System.out.print("     " + num + "  ");
@@ -373,22 +393,6 @@ public class Computer {
 			}
 			System.out.println("\n");
 		}
-	}
-	
-	
-	
-	
-	public static void main(String args[]) {
-//		int ships = 5;
-//		
-//		Computer comp = new Computer(ships);
-//		
-//		comp.placeShipsOnBoard();
-//		
-//		comp.showCurrentBoard();
-		
-		// test out the board here
-	
 	}
 
 }
